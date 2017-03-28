@@ -12,13 +12,11 @@ export class Landing extends React.Component {
         super(props);
         this.state = {
             drink: "G&T"
-        }
-
+        };
         this._handleClick = this._handleClick.bind(this);
     }
 
     _handleClick(key, event) {
-        console.log(key);
         this.setState({"drink": key});
     }
 
@@ -29,22 +27,22 @@ export class Landing extends React.Component {
                     label={ "G&T" }
                     labelPosition="before"
                     secondary={true}
-                    onClick={this._handleClick.bind(this, "G&T")} />
+                    onTouchTap={this._handleClick.bind(this, "G&T")} />
                 <RaisedButton
                     label={ "Rum and Coke" }
                     labelPosition="before"
                     secondary={true}
-                    onClick={this._handleClick.bind(this, "Rum and Coke")} />
+                    onTouchTap={this._handleClick.bind(this, "Rum and Coke")} />
                 <RaisedButton
                     label={ "Whisky Ginger" }
                     labelPosition="before"
                     secondary={true}
-                    onClick={this._handleClick.bind(this, "Whisky Ginger")} />
+                    onTouchTap={this._handleClick.bind(this, "Whisky Ginger")} />
                 <RaisedButton
                     label={ "Sex on a Beach" }
                     labelPosition="before"
                     secondary={true}
-                    onClick={this._handleClick.bind(this, "Sex on a Beach")} />
+                    onTouchTap={this._handleClick.bind(this, "Sex on a Beach")} />
                 <h1>I am going to be making a {this.state.drink}</h1>
             </div>
         );

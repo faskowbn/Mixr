@@ -10,7 +10,8 @@ let express         = require('express'),
     path            = require('path'),
     session         = require('express-session'),
     fs              = require('fs'),
-    mongoose        = require('mongoose')
+    mongoose        = require('mongoose'),
+    Order            = require(path.join(__dirname, './models/user.js'));
 
 let app = express();
 
@@ -40,6 +41,21 @@ app.use(session({
     expires: new Date(Date.now() + (60 * 60 * 30 * 1000)),
     path: '/'
 }));
+
+//Get all orders
+app.get('/orders', function(req, res) {
+    res.status(400).send({"error": "not implmented"});
+});
+
+//Post an order
+app.post('/order', function(req, res) {
+    res.status(400).send({"error": "not implmented"});
+});
+
+//Delete an order
+app.delete('/order/:id', function(req, res) {
+    res.status(400).send({"error": "not implmented"});
+});
 
 app.get('*', function(req, res) {
     res.render('base', {
