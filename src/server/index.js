@@ -11,7 +11,7 @@ let express         = require('express'),
     session         = require('express-session'),
     fs              = require('fs'),
     mongoose        = require('mongoose'),
-    Order            = require(path.join(__dirname, './models/user.js'));
+    Order            = require(path.join(__dirname, './models/order.js'));
 
 let app = express();
 
@@ -44,17 +44,54 @@ app.use(session({
 
 //Get all orders
 app.get('/orders', function(req, res) {
-    res.status(400).send({"error": "not implmented"});
+    Order.find({},  function(err, orders) {
+        if (err){
+            res.status(400).send({ error: 'data could not save to database', err: err });
+        } else {
+            res.status(200).send({ orders: orders });
+        }
+    })
 });
 
 //Post an order
 app.post('/order', function(req, res) {
-    res.status(400).send({"error": "not implmented"});
+    let data = req.body;
+    console.log(req.body);
+    if (!data ||
+        !data.drink) {
+        res.status(400).send({error: 'all form fields required'});
+    } else {
+        let drinker = "";
+        if (data.drinker) {
+            drinker = data.drinker;
+        }
+
+        let newOrder = new Order({
+            drink: data.drink,
+            drinker: data.drinker
+        })
+        newOrder.save(function(err,order) {
+            if (err) {
+                res.status(400).send({ error: 'data could not save to database', err: err });
+            } else {
+                res.status(201).send({
+                    orderId: order.id
+                });
+            }
+        });
+    }
 });
 
 //Delete an order
 app.delete('/order/:id', function(req, res) {
-    res.status(400).send({"error": "not implmented"});
+    console.log(req.params.id);
+    Order.remove({'_id': req.params.id}, function(err) {
+        if (err) {
+            res.status(404).send({ error: 'db problem deleting order' });
+        } else {
+            res.status(200).send({ success: 'user order deleted' });
+        }
+    });
 });
 
 app.get('*', function(req, res) {
