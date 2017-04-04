@@ -15,7 +15,7 @@ let express         = require('express'),
 
 let app = express();
 
-mongoose.connect('mongodb://localhost:27017/faskowbn');
+mongoose.connect('mongodb://localhost:27017/Mixr');
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, './views'));
@@ -37,7 +37,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 module.exports.app = app;
 
 app.use(session({
-    secret: 'ILikeSam2K12',
+    secret: 'sdfjkgkgjh33$t$4gmga',
     expires: new Date(Date.now() + (60 * 60 * 30 * 1000)),
     path: '/'
 }));

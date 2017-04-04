@@ -11,16 +11,30 @@ export class Landing extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            drink: "G&T"
+            drink: undefined
         };
         this._handleClick = this._handleClick.bind(this);
     }
 
     _handleClick(key, event) {
-        this.setState({"drink": key});
+        $.ajax({
+            type: "POST",
+            url: "/order",
+            data: {
+                "drink": key
+            },
+            success: function(id) {
+                this.setState({"drink": key});
+            }.bind(this),
+            error: function(error) {
+                console.log(error);
+            }
+        })
     }
 
     render() {
+        let order = this.state.drink !== undefined ? (<h1>You just ordered a {this.state.drink}</h1>) : null;
+
         return (
             <div>
                 <RaisedButton
@@ -43,7 +57,7 @@ export class Landing extends React.Component {
                     labelPosition="before"
                     secondary={true}
                     onTouchTap={this._handleClick.bind(this, "Sex on a Beach")} />
-                <h1>I am going to be making a {this.state.drink}</h1>
+                {order}
             </div>
         );
     }

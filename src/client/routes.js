@@ -8,6 +8,7 @@ import { render } from 'react-dom'
 import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router'
 
 import { Landing } from './views/landing'
+import { TabletDisplay } from './views/tabletDisplay'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
@@ -39,6 +40,7 @@ let Routes = (
     <Router history={browserHistory}>
         <Route path="/" component={App} >
             <IndexRoute component={Landing} name="landing"/>
+            <Route path="/tabletDisplay" component={TabletDisplay} name="TabletDisplay"/>
         </Route>
     </Router>
 );

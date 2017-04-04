@@ -10,6 +10,7 @@
   "author": "B. Faskowitz",
   "license": "MIT",
   "dependencies": {
+    "pi-gpio": "^0.0.8",
     "babel-preset-es2015": "^6.14.0",
     "bluebird": "^3.4.6",
     "blueimp-md5": "^2.3.1",
