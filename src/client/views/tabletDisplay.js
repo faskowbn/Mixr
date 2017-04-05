@@ -9,29 +9,45 @@
 import React from 'react';
 import { Link } from 'react-router';
 import RaisedButton from 'material-ui/RaisedButton';
-import {Card} from 'material-ui/Card'
+import {Card, CardText} from 'material-ui/Card'
 
 export class TabletDisplay extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            drinkList: undefined
+            drinkList: undefined,
+            lastOrder: undefined
         };
-        //this._handleClick = this._handleClick.bind(this);
+        this._getOrders = this._getOrders.bind(this)
     }
 
-    /*
-    _handleClick(key, event) {
-        this.setState({"drink": key});
+    _handleClick(order, event) {
+        $.ajax({
+            type: "DELETE",
+            url: "/order/" + order._id,
+            success: function(data) {
+                $.ajax({
+                    type: "GET",
+                    url: "/orders",
+                    success: function(data) {
+                        this.setState({"drinkList": data, "lastOrder": order});
+                    }.bind(this),
+                    error: function(error) {
+                        console.log(error);
+                    }
+                })
+            }.bind(this),
+            error: function(error) {
+                console.log(error);
+            }
+        })
     }
-    */
 
-    componentDidMount() {
+    _getOrders() {
         $.ajax({
             type: "GET",
             url: "/orders",
             success: function(data) {
-                console.log(data);
                 this.setState({"drinkList": data});
             }.bind(this),
             error: function(error) {
@@ -40,17 +56,30 @@ export class TabletDisplay extends React.Component {
         })
     }
 
+    componentDidMount() {
+        this._getOrders();
+        setTimeout(this.componentDidMount.bind(this), 5000);
+    }
+
     render() {
+        let lastPerson = this.state.lastOrder !== undefined && this.state.lastOrder.drinker !== undefined ?
+            " by " + this.state.lastOrder.drinker : null;
+
+        let lastOrder = this.state.lastOrder === undefined ? null :
+            (<h1>Last order was a {this.state.lastOrder.drink}{lastPerson}</h1>);
+
         let view = this.state.drinkList === undefined ? (<h1>Loading Orders...</h1>) :
             (
-                Object.keys(this.state.drinkList).map(function (key) {
-                    return <Card key={key}>this.state.drinkList[key].drink</Card>
-                })
-            );
+                Object.keys(this.state.drinkList.orders).map(function (key) {
+                    let textKey = key + "text";
+                    return (<Card key={key} onTouchTap={this._handleClick.bind(this, this.state.drinkList.orders[key])}>
+                                <CardText key={textKey}>{this.state.drinkList.orders[key].drink}</CardText>
+                            </Card>)}.bind(this)));
 
         return (
             <div>
                 <Card>
+                    {lastOrder}
                     {view}
                 </Card>
             </div>

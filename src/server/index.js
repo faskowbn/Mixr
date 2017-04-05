@@ -69,7 +69,7 @@ app.post('/order', function(req, res) {
         let newOrder = new Order({
             drink: data.drink,
             drinker: data.drinker
-        })
+        });
         newOrder.save(function(err,order) {
             if (err) {
                 res.status(400).send({ error: 'data could not save to database', err: err });
