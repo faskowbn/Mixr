@@ -66,10 +66,18 @@ app.post('/order', function(req, res) {
             drinker = data.drinker;
         }
 
-        let newOrder = new Order({
-            drink: data.drink,
-            drinker: data.drinker
-        });
+        let newOrder;
+        if (data.drinker !== undefined) {
+            newOrder = new Order({
+                drink: data.drink,
+                drinker: data.drinker
+            });
+        } else {
+            newOrder = new Order({
+                drink: data.drink,
+            });
+        }
+
         newOrder.save(function(err,order) {
             if (err) {
                 res.status(400).send({ error: 'data could not save to database', err: err });

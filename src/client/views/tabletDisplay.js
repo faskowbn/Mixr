@@ -11,12 +11,14 @@ import { Link } from 'react-router';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Card, CardText} from 'material-ui/Card'
 
+//let gpio = require(path.join(__dirname, '../../dispense/dispense.js'));
+
 export class TabletDisplay extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             drinkList: undefined,
-            lastOrder: undefined
+            lastOrder: []
         };
         this._getOrders = this._getOrders.bind(this)
     }
@@ -31,6 +33,7 @@ export class TabletDisplay extends React.Component {
                     url: "/orders",
                     success: function(data) {
                         this.setState({"drinkList": data, "lastOrder": order});
+                        //gpio.doGpio;
                     }.bind(this),
                     error: function(error) {
                         console.log(error);
@@ -71,11 +74,12 @@ export class TabletDisplay extends React.Component {
         let view = this.state.drinkList === undefined ? (<h1>Loading Orders...</h1>) :
             (
                 Object.keys(this.state.drinkList.orders).map(function (key) {
+                    let drinker = this.state.drinkList.orders[key].drinker !== "" ? " by " +
+                                                        this.state.drinkList.orders[key].drinker : null;
                     let textKey = key + "text";
                     return (<Card key={key} onTouchTap={this._handleClick.bind(this, this.state.drinkList.orders[key])}>
-                                <CardText key={textKey}>{this.state.drinkList.orders[key].drink}</CardText>
+                                <CardText key={textKey}>{this.state.drinkList.orders[key].drink}{drinker}</CardText>
                             </Card>)}.bind(this)));
-
         return (
             <div>
                 <Card>
