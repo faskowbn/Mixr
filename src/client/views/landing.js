@@ -8,7 +8,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import {Card, CardText, CardHeader} from 'material-ui/Card'
 
-require('../stylesheets/landing.css');
 let recipes = require('../recipes/recipes.js').recipes;
 
 export class Landing extends React.Component {
@@ -46,7 +45,7 @@ export class Landing extends React.Component {
     render() {
         let drinks = Object.keys(recipes).map(function (key) {
             return (<RaisedButton key={key}
-                style={{display: "block", width: "25%", margin: "0 auto"}}
+                style={{display: "block", width: "80%", margin: "0 auto"}}
                 label={ key }
                 labelPosition="before"
                 secondary={true}
@@ -59,7 +58,7 @@ export class Landing extends React.Component {
             (<h3 style={{display: "block", textAlign: "center"}}>{you} just ordered a {this.state.drink}</h3>) : null;
 
         return (
-            <Card className="center-card" style={{display: "block", marginLeft: "100px", marginRight: "100px", marginTop: "150px"}}>
+            <Card style={{display: "block", marginLeft: "50px", marginRight: "50px"}}>
                 <h1
                     style={{display: "block", textAlign: "center"}}
                 >Welcome to Mixr! Can I take your order?</h1>

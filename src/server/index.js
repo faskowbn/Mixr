@@ -11,7 +11,9 @@ let express         = require('express'),
     session         = require('express-session'),
     fs              = require('fs'),
     mongoose        = require('mongoose'),
-    Order            = require(path.join(__dirname, './models/order.js'));
+    exec            = require('child_process').exec,
+    Order           = require(path.join(__dirname, './models/order.js')),
+    recipes         = require(path.join(__dirname, '../client/recipes/recipes.js')).recipes;
 
 let app = express();
 
@@ -93,11 +95,40 @@ app.post('/order', function(req, res) {
 //Delete an order
 app.delete('/order/:id', function(req, res) {
     console.log(req.params.id);
-    Order.remove({'_id': req.params.id}, function(err) {
+    Order.find({'_id': req.params.id}, function(err, order) {
         if (err) {
-            res.status(404).send({ error: 'db problem deleting order' });
+            res.status(404).send({error: "could not find drink order"});
         } else {
-            res.status(200).send({ success: 'user order deleted' });
+            Order.remove({'_id': req.params.id}, function(err) {
+                if (err) {
+                    res.status(500).send({ error: 'db problem deleting order' });
+                } else {
+                    let drinkIngredients = recipes[order[0].drink];
+                    let formattedIngredients = "";
+                    Object.keys(drinkIngredients).map(function (key) {
+                        formattedIngredients = formattedIngredients + drinkIngredients[key] + key + " ";
+                    });
+
+                    let cmd = 'C:\\Python27\\python.exe ' + __dirname + '\\dispense\\dispense.py ' + formattedIngredients;
+                    let child = exec(cmd);
+                    child.stdout.on('data', (data) => {
+                        console.log(data.toString());
+                    });
+
+                    child.stderr.on('data', (data) => {
+                        console.log(data.toString());
+                    });
+
+                    child.on('exit', (code) => {
+                        console.log(`Child exited with code ${code}`);
+                        if (code === 0) {
+                            res.status(204).send({ response : 'order deleted' });
+                        } else {
+                            res.status(500).send({ error : 'server troubles' });
+                        }
+                    });
+                }
+            });
         }
     });
 });
