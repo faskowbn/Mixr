@@ -6,6 +6,8 @@
  */
 'use strict';
 
+let path = require('path');
+
 import React from 'react';
 import { Link } from 'react-router';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -16,7 +18,6 @@ import FlatButton from 'material-ui/FlatButton';
 //let path = require('path');
 //console.log(path.join(__dirname, '/dispense/dispense.js'));
 //let gpio = require(path.join(__dirname, '../../dispense/dispense.js'));
-
 
 export class TabletDisplay extends React.Component {
     constructor(props) {
@@ -46,7 +47,12 @@ export class TabletDisplay extends React.Component {
                     url: "/orders",
                     success: function(data) {
                         this.setState({"drinkList": data, "lastOrder": order, "thisOrder": undefined, "open": false});
-                        //gpio.doGpio();
+                        /*
+                        console.log(path.join(__dirname, '/dispense/dispense.py'));
+                        let spawn = require('child_process').spawn;
+                        var process = spawn('"dir"',[]);
+                        //var process = spawn('C:\Python27\python.exe',[path.join(__dirname, '/dispense/dispense.py')],{"stdio": "inherit"});
+                        */
                     }.bind(this),
                     error: function(error) {
                         console.log(error);
@@ -124,8 +130,8 @@ export class TabletDisplay extends React.Component {
                         open={this.state.open}
                         onRequestClose={this._handleDialogClose}
                     >
-                        Is the drink ready to pour?
-                    </Dialog>
+                        Is your drink ready to pour?
+                    </Dialog>s
                     {lastOrder}
                     {view}
                 </Card>

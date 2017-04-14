@@ -9,6 +9,7 @@ import TextField from 'material-ui/TextField';
 import {Card, CardText, CardHeader} from 'material-ui/Card'
 
 require('../stylesheets/landing.css');
+let recipes = require('../recipes/recipes.js').recipes;
 
 export class Landing extends React.Component {
     constructor(props) {
@@ -43,6 +44,15 @@ export class Landing extends React.Component {
     }
 
     render() {
+        let drinks = Object.keys(recipes).map(function (key) {
+            return (<RaisedButton key={key}
+                style={{display: "block", width: "25%", margin: "0 auto"}}
+                label={ key }
+                labelPosition="before"
+                secondary={true}
+                onTouchTap={this._handleClick.bind(this, key)} />);
+        }.bind(this));
+
         let you = this.state.drinker !== "" ? this.state.drinker : "You";
 
         let order = this.state.drink !== undefined ?
@@ -58,30 +68,7 @@ export class Landing extends React.Component {
                     floatingLabelText="Your Name?"
                     onChange={this._handleNameChange}
                 />
-                <RaisedButton
-                    style={{display: "block", width: "25%", margin: "0 auto"}}
-                    label={ "G&T" }
-                    labelPosition="before"
-                    secondary={true}
-                    onTouchTap={this._handleClick.bind(this, "G&T")} />
-                <RaisedButton
-                    style={{display: "block", width: "25%", margin: "0 auto"}}
-                    label={ "Rum and Coke" }
-                    labelPosition="before"
-                    secondary={true}
-                    onTouchTap={this._handleClick.bind(this, "Rum and Coke")} />
-                <RaisedButton
-                    style={{display: "block", width: "25%", margin: "0 auto"}}
-                    label={ "Whisky Ginger" }
-                    labelPosition="before"
-                    secondary={true}
-                    onTouchTap={this._handleClick.bind(this, "Whisky Ginger")} />
-                <RaisedButton
-                    style={{display: "block", width: "25%", margin: "0 auto"}}
-                    label={ "Sex on a Beach" }
-                    labelPosition="before"
-                    secondary={true}
-                    onTouchTap={this._handleClick.bind(this, "Sex on a Beach")} />
+                {drinks}
                 {order}
             </Card>
         );

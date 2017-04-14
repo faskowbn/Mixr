@@ -15,6 +15,9 @@ module.exports = {
     entry: {
         main: "./main"
     },
+    node: {
+        child_process: 'empty'
+    },
     output: {
         path: "./public/js/",
         filename: "[name].js",
