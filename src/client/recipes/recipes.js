@@ -3,57 +3,57 @@
  */
 module.exports.recipes = {
     "Aviator Fuel": {
-        "lemonade": 2,
-        "spite": 2,
-        "vodka": 2,
+        "lemonade": 4,
+        "sprite": 4,
+        "vodka": 4,
     },
     "Bull Frog": {
-        "vodka": 2,
-        "lemonade": 4
+        "vodka": 4,
+        "lemonade": 8
     },
     "Cool Kick": {
-        "tequila": 2,
-        "vodka": 2,
-        "sprite": 2
+        "tequila": 4,
+        "vodka": 4,
+        "sprite": 4
     },
     "Lemonade Straight": {
-        "lemonade": 6
+        "lemonade": 12
     },
     "OJ Straight": {
-        "orangeJuice": 6
+        "orangeJuice": 12
     },
     "Vodka Straight": {
-        "vodka": 2
+        "vodka": 3
     },
     "Tequila Straight": {
-        "tequila": 2
+        "tequila": 3
     },
     "Sprite Straight": {
-        "sprite": 6
+        "sprite": 12
     },
     "Dirty Metke": {
-        "lemonade": 3,
-        "voda": 2,
-        "sprite": 1
+        "lemonade": 6,
+        "vodka": 4,
+        "sprite": 2
     },
     "Tequila Sunrise": {
-        "tequila": 2,
-        "sprite": 4
+        "tequila": 4,
+        "orangeJuice": 8
     },
     "Screwdriver": {
-        "vodka": 2,
-        "orangeJuice": 4
+        "vodka": 4,
+        "orangeJuice": 8
     },
     "Vodka Sprite": {
-        "vodka": 2,
-        "sprite": 4
+        "vodka": 4,
+        "sprite": 8
     },
     "Lemonade Sprite": {
-        "lemonade": 3,
-        "sprite": 3
+        "lemonade": 6,
+        "sprite": 6
     },
     "Tequila Sprite": {
-        "tequila": 2,
-        "sprite": 4
+        "tequila": 4,
+        "sprite": 8
     }
 }

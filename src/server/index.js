@@ -109,7 +109,7 @@ app.delete('/order/:id', function(req, res) {
                         formattedIngredients = formattedIngredients + drinkIngredients[key] + key + " ";
                     });
 
-                    let cmd = 'C:\\Python27\\python.exe ' + __dirname + '\\dispense\\dispense.py ' + formattedIngredients;
+                    let cmd = 'python ' + __dirname + '/dispense/dispense.py ' + formattedIngredients;
                     let child = exec(cmd);
                     child.stdout.on('data', (data) => {
                         console.log(data.toString());
